@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumekraft</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    
+        {% load static %}
+        <link rel="stylesheet" href="{% static '\styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vina+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <!-- Navbar -->
+
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img class="logo" src="static\logo-no-background.png" alt="Logo" width="200vh"
+                    class="d-inline-block align-text-top">
+
+            </a>
+
+            <ul>
+                <li class="nav-item"><a class="nav-link" href="/faq">FAQ</a></li>
+                <li class="nav-item"><a class="nav-link" href="/feedback">Feedback</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contactus">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+
+                Button trigger modal
+                {% if  request.user.is_authenticated %}
+                <li class="nav-item">
+                <a class="nav-link" href='/logout'>Log Out</a>
+              </li>
+
+                <li class="nav-item dropdown">
+                    <!-- Button trigger modal -->
+                    {% else %}
+                    <button type="button" class="nav-link " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Login
+                    </button>
+                    {% endif %}
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/home" method="POST">
+                                        {% csrf_token %}
+                                        <div class="row mb-3">
+                                            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="inputEmail"
+                                                    id="inputEmail">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" name="inputPassword" class="form-control"
+                                                    id="inputPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-sm-10 offset-sm-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                                    <label class="form-check-label" for="gridCheck1">
+                                                        Remember me
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="register00" style="display: inline-flex;">
+                                            <p>Don't have account?</p><a href="/register">Create one</a>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Sign in</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <!-- modal -->
+        </div>
+    </nav>
+    {% if messages %}
+    <ul class="alert alert-primary" role="alert">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    
+
+     <!-- FAQ -->
+
+     <div class="faq-heading">
+        <img src="static\pngegg.png" alt="">
+        <h1>Have Questions About Writing A Great Resume?</h1>
+    </div>
+    <p class="para3">Expert Answers to All Your Resume Inquiries.</p>
+    <p class="para4"><b>RESUME TEMPLATES FAQ</b></p>
+
+    <!-- FAQ-List -->
+
+
+    <div class="faq">
+        <button class="accordion">
+            What is a Resume?
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div class="panel">
+            <p>A resume, sometimes called a CV or curriculum vitae, is a document mostly used to showcase your career
+                background, skills, and accomplishments when searching for a job. Resume Build helps you create
+                professional resumes tailored to the specific industry or job you want in just minutes.
+            </p>
+        </div>
+    </div>
+    <div class="faq">
+        <button class="accordion">
+            How Many Pages Should a Resume Be?
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div class="panel">
+            <p>Resumes should grab the recruiter’s attention in just a few seconds, and Resume Build helps you create
+                the perfect resume using expert tips and pre-written resume examples to build it fast and easily. While
+                the length of the resume depends on the career field and experience of the applicant, a two-page resume
+                is ideal, according to employers.
+            </p>
+        </div>
+    </div>
+    <div class="faq">
+        <button class="accordion">
+            What is a resume template?
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div class="panel">
+            <p>Resume templates serve as a foundation for your resume:
+
+                <li>They provide a structure and layout for your resume.</li>
+
+                <li>They organize your professional information with employer-ready sections.</li>
+                <li> They give your resume a polished, streamlined look.</li>
+                
+            </p>
+        </div>
+    </div>
+    <div class="faq">
+        <button class="accordion">
+            Do I need a different resume for each job?
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div class="panel">
+            <p>Yes! We always recommend that you create a new resume for every job you apply to. No two jobs are exactly alike — even a position with the same job title can be very different depending on the company. Customizing your resume for every job increases your chances of passing ATS, and featuring information that answers each employer’s specific requirements.
+            </p>
+        </div>
+    </div>
+    <div class="faq">
+        <button class="accordion">
+            How do I show my accomplishments on my resume?
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div class="panel">
+            <p>Don’t just list responsibilities and everyday tasks in your work history section. Instead, focus on accomplishments. Use active verbs to describe them, and add metrics and numbers to give them greater impact.
+            </p>
+        </div>
+    </div>
+    <footer>
+        <div class="container text-center">
+            <div class="row">
+              <div class="col order-last">
+                <h5 id="contactus">Contact us</h5>
+                <p id="para9">United University,Prayagraj,211009
+                    000-808-9674
+                    673-365-3656
+                    resumekraftinbox@gmail.com
+                </p>
+              </div>
+              <div class="col">
+                <h5>Links</h5>
+                <ol>
+                    <li><a href="/faq">FAQ</a></li>
+                <li><a href="/feedback">Feedback</a></li>
+                <li><a href="#contactus">Contact</a></li>
+                <li><a href="/about">About</a></li>
+
+                </ol>
+              </div>
+              <div class="col order-first">
+                <img src="static\logo-white-removebg-preview.png" alt="">
+                <p>ResumeKraft made with love of our community and a way to grab opportunities in life.</p>
+              </div>
+            </div>
+          </div>
+    </footer>
+
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+
+                this.classList.toggle("active");
+                this.parentElement.classList.toggle("active");
+
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                }
+                else {
+                    panel.style.display = "block";
+                }
+
+            })
+        }
+    </script>
+
+</body>
+</html>
